@@ -1,0 +1,44 @@
+name: Tag Latest Commit
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Name of the tag'
+        required: true
+        type: string
+
+jobs:
+  create-pull-request-main2develop:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Create Pull Request
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: main
+        destination_branch: develop
+        pr_title: "Merge main into develop"
+        pr_body: "This PR was automatically created by GitHub Actions."
+        pr_draft: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+  tag_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Create tag
+        run: |
+          git fetch --tags
+          git tag -a ${{ github.event.inputs.tag_name }} -m "Tagging commit ${{ github.sha }}"
+          git push origin ${{ github.event.inputs.tag_name }}
