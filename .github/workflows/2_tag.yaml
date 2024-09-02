@@ -7,7 +7,11 @@ on:
         description: 'Name of the tag'
         required: true
         type: string
-
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+  
 jobs:
   create-pull-request-main2develop:
     runs-on: ubuntu-latest
