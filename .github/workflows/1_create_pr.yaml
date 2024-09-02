@@ -13,6 +13,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
+        commit-message: "create-pr"
         branch: ${{ github.ref_name }}
         base: main
         title: "Merge ${{ github.ref_name }} into main"
