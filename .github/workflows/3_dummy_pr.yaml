@@ -1,0 +1,12 @@
+name: 3_dummy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-pull-request-release2main:
+    runs-on: ubuntu-latest
+    if: ${{ false }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
