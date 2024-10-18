@@ -7,4 +7,6 @@ on:
 jobs:
   notify_slack:
     runs-on: ubuntu-latest
-    uses: actions/checkout@v2
+    steps: 
+      - name: echo
+        run: pwd
